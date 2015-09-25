@@ -1,5 +1,5 @@
 #require 'active-model'
-require 'loggable'
+require 'logger'
 require 'active_support/core_ext/hash'
 require 'yaml'
 require 'uri'
@@ -11,7 +11,13 @@ module Rubyhorn
 
   class << self
     attr_accessor :config, :config_path, :config_options
+
+    def logger
+      @logger ||= Logger.new(STDOUT)
+    end
+    attr_writer :logger
   end
+
 
   @config ||= {}
   @config_options ||= {}
@@ -157,7 +163,6 @@ module Rubyhorn
   def self.client= client
     @client = client
   end
-
 #  def self.default_config
 #    {:url=>'http://localhost:8080/', :user=>'matterhorn_system_account', :password=>'CHANGE_ME'}
 #  end
